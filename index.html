@@ -54,7 +54,7 @@
 
     <main>
       <img id="our_logo" src="Resources/Images/wedding-rings.png" />
-      <div id="ind_cover_bg_image"></div>
+      <div id="ind_cover_bg_image"></div> 
       <section class="about_us">
         <div class="content">
           <div class="about_noivo">
@@ -143,7 +143,7 @@
                 convidados confirmem sua presença em até x dias antes do evento!
               </p>
               <div class="presence_form" action="/my-handling-form-page" method="post">
-                <form>
+                <form onsubmit="return false">
                   <fieldset class="number_code">
                     <legend for="code">Nº do seu convite</legend>
                     <div>
@@ -167,7 +167,7 @@
                     </legend>
                     <div class="select">
                       <select name="slct" id="slct" required>
-                        <option value="none" id="escolha" selected >Escolha...</option>
+                        <option value="" id="escolha" selected disabled>Escolha...</option>
                         <option value="1">Uma Pessoa</option>
                         <option value="2">Duas Pessoas</option>
                         <option value="3">Três Pessoas</option>

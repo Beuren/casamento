@@ -1,31 +1,8 @@
-const inputElements = [...document.querySelectorAll("input.code_input")];
-
-inputElements.forEach((ele, index) => {
-  ele.addEventListener("keydown", (e) => {
-    if (e.keyCode === 8 && e.target.value === "")
-      inputElements[Math.max(0, index - 1)].focus();
-  });
-  ele.addEventListener("input", (e) => {
-    const [first, ...rest] = e.target.value;
-    e.target.value = first ?? "";
-    if (index !== inputElements.length - 1 && first !== undefined) {
-      inputElements[index + 1].focus();
-      inputElements[index + 1].value = rest.join("");
-      inputElements[index + 1].dispatchEvent(new Event("input"));
-    }
-  });
+$(document).ready(function () {
+  SetDefaults();
+  SetEventListeners();
+  SetAutoChangeInputs();
 });
-
-function onSubmit(e) {
-  e.preventDefault();
-  const code = [...document.getElementsByTagName("input")]
-    .filter(({ name }) => name)
-    .map(({ value }) => value)
-    .join("");
-  console.log(code);
-}
-
-// VERIFY CODE
 
 const guest = [
   {
@@ -44,9 +21,9 @@ const guest = [
     inviteNmb: 2,
   },
 ];
+
 let codeArray = [...document.querySelectorAll(".code_input")];
 const nameField = document.getElementById("guestName");
-const verifyBtn = document.getElementById("code_verify");
 const warningMessage = document.querySelector(".wrong_number");
 const select = document.getElementById("slct");
 const selectDiv = document.getElementsByClassName("disabled");
@@ -59,12 +36,38 @@ const optPessoas = [
   "Seis Pessoas",
 ];
 
-nameField.disabled = true;
-select.disabled = true;
-$("#slct").find("option").not("#escolha").remove();
-$(".select").addClass("disabled");
+function SetDefaults() {
+  nameField.disabled = true;
+  select.disabled = true;
+  $("#slct").find("option").not("#escolha").remove();
+  $(".select").addClass("disabled");
+}
 
-verifyBtn.addEventListener("click", () => {
+function SetEventListeners() {
+  $("#code_verify").click(DoEverything);
+}
+
+function SetAutoChangeInputs() {
+  const inputElements = [...document.querySelectorAll("input.code_input")];
+
+  inputElements.forEach((ele, index) => {
+    ele.addEventListener("keydown", (e) => {
+      if (e.keyCode === 8 && e.target.value === "")
+        inputElements[Math.max(0, index - 1)].focus();
+    });
+    ele.addEventListener("input", (e) => {
+      const [first, ...rest] = e.target.value;
+      e.target.value = first ?? "";
+      if (index !== inputElements.length - 1 && first !== undefined) {
+        inputElements[index + 1].focus();
+        inputElements[index + 1].value = rest.join("");
+        inputElements[index + 1].dispatchEvent(new Event("input"));
+      }
+    });
+  });
+}
+
+function DoEverything() {
   var newArray = [];
 
   for (let codeNmb of codeArray) {
@@ -110,4 +113,4 @@ verifyBtn.addEventListener("click", () => {
       nameField.value = "Digite seu nome aqui...";
     }
   }
-});
+}
